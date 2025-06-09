@@ -3,5 +3,8 @@
 .DS_STORE
 Thumbs.db
 __pycache__
+.pytest_cache
+.env*
+!.env*.sample
 *bckp*
 tmp
