@@ -4,6 +4,7 @@
 Thumbs.db
 __pycache__
 .pytest_cache
+allure_results
 .env*
 !.env*.sample
 *bckp*
