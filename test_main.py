@@ -5,6 +5,7 @@ from playwright.sync_api import Page
 from shared.utils import (
     allure_annotation_fabric,
 )
+from shared.constants import ESHOP_BASE_URL
 
 
 ENTITY_NAME = "product"
@@ -14,7 +15,7 @@ allure_annotation = allure_annotation_fabric(f"Test {ENTITY_NAME} entity")
 @pytest.fixture(scope="session")
 @allure.title("Eshop base URL")
 def base_url():
-    return "http://localhost:8081"
+    return f"http://{ESHOP_BASE_URL}"
 
 
 @allure_annotation("Check homepage is loaded")

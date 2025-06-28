@@ -1,9 +1,10 @@
 from functools import wraps
 import json
 import allure
+from .constants import TEST_SUIT_NAME
 
 
-ALLURE_SUIT_TITLE = "Bitnami Opencart Eshop Tests"
+ALLURE_SUIT_TITLE = f"{TEST_SUIT_NAME} Tests"
 
 
 def allure_annotation_fabric(feature: str, suite: str = ALLURE_SUIT_TITLE):
