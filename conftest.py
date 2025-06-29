@@ -1,3 +1,5 @@
+# pylint: disable=redefined-outer-name
+
 import os
 import sys
 import platform
@@ -12,6 +14,7 @@ from shared.utils import wait_for_service
 ALLURE_RESULT_DIR = "allure_results"
 ALLURE_ENV_FILE = f"{ALLURE_RESULT_DIR}/environment.properties"
 ESHOP_URL = f"http://{ESHOP_BASE_URL}"
+TEST_TIMEOUT = 10_000
 
 
 def pytest_addoption(parser):
@@ -35,6 +38,15 @@ def browser_context_args():
         "viewport": None,  # fullscreen mode
         "ignore_https_errors": True,
     }
+
+
+@pytest.fixture
+def page(browser):
+    context = browser.new_context()
+    page = context.new_page()
+    page.set_default_timeout(TEST_TIMEOUT)
+    yield page
+    context.close()
 
 
 @pytest.fixture(scope="session", autouse=True)
