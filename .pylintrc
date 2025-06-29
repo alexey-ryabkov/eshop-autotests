@@ -1,0 +1,27 @@
+[MASTER]
+ignore=venv
+jobs=1
+
+[MESSAGES CONTROL]
+disable=
+     missing-module-docstring,
+     missing-class-docstring,
+     missing-function-docstring,
+     too-many-function-args,
+     import-outside-toplevel,
+;     too-few-public-methods,
+;     too-many-arguments,
+;     duplicate-code,
+;     invalid-name,
+;     import-error,
+;     no-member,
+;     unused-argument,
+;     line-too-long
+
+[FORMAT]
+max-line-length=80
+indent-string='    '
+
+[REPORTS]
+output-format=colorized
+reports=no
