@@ -2,18 +2,56 @@ import os
 import sys
 import platform
 import importlib.metadata
+import subprocess
 import pytest
-import allure
 
 from shared.constants import TEST_SUIT_NAME, ESHOP_BASE_URL
+from shared.utils import wait_for_service
 
 
 ALLURE_RESULT_DIR = "allure_results"
 ALLURE_ENV_FILE = f"{ALLURE_RESULT_DIR}/environment.properties"
+ESHOP_URL = f"http://{ESHOP_BASE_URL}"
+
+
+def pytest_addoption(parser):
+    parser.addoption(
+        "--keep-docker",
+        action="store_true",
+        help="Don't stop Docker after tests",
+    )
+
+
+@pytest.fixture(scope="session")
+def eshop_url():
+    return ESHOP_URL
+
+
+@pytest.fixture(scope="session")
+def browser_context_args():
+    """Playwright browser setups"""
+
+    return {
+        "viewport": None,  # fullscreen mode
+        "ignore_https_errors": True,
+    }
 
 
 @pytest.fixture(scope="session", autouse=True)
-@allure.title("Test environment")
+def ensure_docker_up(request):
+    """Starts docker before testing and stops after"""
+
+    try:
+        subprocess.run(["docker", "compose", "up", "-d"], check=True)
+        wait_for_service(ESHOP_URL)
+        yield
+        if not request.config.getoption("--keep-docker"):
+            subprocess.run(["docker", "compose", "down"], check=True)
+    except subprocess.CalledProcessError as e:
+        pytest.fail(f"Docker Compose failed to start:\n{e}")
+
+
+@pytest.fixture(scope="session", autouse=True)
 def test_environment():
     """Captures environment details for the Allure report."""
 
@@ -30,7 +68,6 @@ def test_environment():
         "Python": sys.version.split()[0],
         "pytest": pytest.__version__,
         "pytest-playwright": get_version("pytest-playwright"),
-        "requests": get_version("requests"),
         "allure-pytest": get_version("allure-pytest"),
     }
 
