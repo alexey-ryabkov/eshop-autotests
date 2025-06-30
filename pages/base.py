@@ -1,5 +1,5 @@
 import allure
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 
 
 class BasePage:
@@ -46,6 +46,7 @@ class BasePage:
         notification = self.get_notification()
         with allure.step(allure_step):
             notification.wait_for(state="visible")
+            expect(notification).not_to_have_text("", timeout=500)
         return notification
 
     def get_cart_button(self):
