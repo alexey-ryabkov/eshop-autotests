@@ -40,8 +40,8 @@ def test_cart_contents(cart_page):
 @allure_annotation(
     "Change product quantity",
     (
-        "Check if we can change {CART_PRODUCT} product quantity ",
-        "and this affects the cart total",
+        "Check if we can change {CART_PRODUCT} product quantity "
+        "and this affects the cart total"
     ),
 )
 @allure.tag("cart-ui")

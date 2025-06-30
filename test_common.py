@@ -51,8 +51,8 @@ def test_eshop_phone(homepage):
 @allure_annotation(
     "Change currency",
     (
-        "This test verifies that after currency changed, ",
-        "its sign will appear in the cart widget button label",
+        "This test verifies that after currency changed, "
+        "its sign will appear in the cart widget button label"
     ),
 )
 @allure.tag("layout-ui", "currency")

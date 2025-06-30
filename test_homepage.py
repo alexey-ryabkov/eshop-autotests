@@ -60,8 +60,8 @@ def test_carousel_playing(homepage):
 @allure_annotation(
     "Add product to cart",
     (
-        "This test verifies that after click on cart button ",
-        "under the product it appears in cart widget",
+        "This test verifies that after click on cart button "
+        "under the product it appears in cart widget"
     ),
 )
 @allure.tag("homepage-ui", "catalog-ui")
@@ -69,10 +69,3 @@ def test_add_product_2cart(homepage):
     homepage.add_product_2cart(EXPECTED_ADDED_2CART_PRODUCT)
     notification = homepage.get_notification()
     assert EXPECTED_ADDED_2CART_PRODUCT in notification.inner_text()
-    # with allure.step(
-    #     f"Click on cart button for {EXPECTED_ADDED_2CART_PRODUCT} product"
-    # ):
-    #     product_card = homepage.get_product_card(EXPECTED_ADDED_2CART_PRODUCT)
-    #     product_card.locator("button").first.click()
-    # notification = homepage.wait_4notification("Wait for cart alert to appear")
-    # assert EXPECTED_ADDED_2CART_PRODUCT in notification.inner_text()
