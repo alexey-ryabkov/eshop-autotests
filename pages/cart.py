@@ -22,19 +22,26 @@ class CartPage(BasePage):
         product_items = self.get_cart_table().locator("tbody tr")
         count = product_items.count()
         for i in range(count):
-            with allure.step(f"Delete product #{i} from the cart"):
-                product_items.nth(i).locator(
-                    "button[aria-label='Remove']"
-                ).click()
+            with allure.step(f"Delete product #{i+1} from the cart"):
+                product_items.nth(i).locator("button[title='Remove']").click()
                 self._wait_4update()
 
     def get_cart_item_price(self, product: str):
         product_item = self.get_cart_item(product)
-        raw_price = product_item.locator("text-end").last.text_content
+        raw_price = product_item.locator(".text-end").last.text_content()
         return self._parse_price(raw_price)
 
     def get_cart_item(self, product: str):
         return self.get_cart_table().locator(f"tbody tr:has-text('{product}')")
+
+    def get_cart_total(self):
+        raw_price = (
+            self.get_cart_table()
+            .locator("tfoot tr")
+            .last.locator(".text-end")
+            .last.text_content()
+        )
+        return self._parse_price(raw_price)
 
     def get_cart_table(self):
         return self.page.locator("#shopping-cart .table")
