@@ -1,0 +1,3 @@
+Container eshop-autotests-mariadb-1  Running
+Container eshop-autotests-phpadmin-1  Running
+Container eshop-autotests-opencart-1  Running
